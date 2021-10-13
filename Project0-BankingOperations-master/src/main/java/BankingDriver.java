@@ -33,7 +33,7 @@ public class BankingDriver {
 						sw.modifyUserAccounts();
 						break;
 					case (3):
-						sw.approveDenyApplications();
+						sw.approveDenyCancelApplications();
 						break;
 					case (4): // Exit the application
 						adminMenuNotDone = false;
