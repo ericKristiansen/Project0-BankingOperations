@@ -52,6 +52,41 @@ public class AccountService {
 		}
 	}
 	
+	public void approveDenyCancelApplications()
+	{
+		this.getAllAccounts();
+		for(AccountDisplay ad: allAccounts)
+		{
+			//display account information
+			us.outputToUser("\n**************\n" + ad.toString() + "\n\n");
+			
+			// step through accounts if not approved prompt for approval
+			if (!ad.isApproved())
+			{
+				int choice = us.getUserIntResponse("Do you approve?\n"
+						+ "Press 1 and enter to approve or press 2 for the next account.\n"
+						+ "If you wish to delete this application or account, press 5: ");
+				if(choice == 1)
+				{
+					aDao.setAccountApproval(ad.getAccountId(), true);
+				}
+				else if (choice == 5)
+				{
+					aDao.deleteAccountById(ad.getAccountId());
+				}
+			}
+			else
+			{
+				int choice = us.getUserIntResponse("Do you want to deny (disapprove)this account?\n"
+						+ "Press 1 and enter to disapprove or press 2 for the next account: ");
+				if(choice == 1)
+				{
+					aDao.setAccountApproval(ad.getAccountId(), false);
+				}
+			}
+		}
+	}
+	
 	public void approveDenyAccounts()
 	{
 		this.getAllAccounts();

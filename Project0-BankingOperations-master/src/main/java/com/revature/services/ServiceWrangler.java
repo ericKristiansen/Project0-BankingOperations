@@ -42,6 +42,10 @@ public class ServiceWrangler {
 	public void approveDenyApplications() {
 		as.approveDenyAccounts();
 	}
+	public void approveDenyCancelApplications()
+	{
+		as.approveDenyCancelApplications();
+	}
 	
 	public int employeeMenu()
 	{
