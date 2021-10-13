@@ -2,8 +2,9 @@ package com.revature.services;
 
 import java.util.Scanner;
 
-import com.revature.dao.USER;
+import com.revature.dao.users.USER;
 import com.revature.exceptions.InvalidCredentialsException;
+import com.revature.logging.Logging;
 
 
 public class LoginService {
@@ -27,7 +28,7 @@ public class LoginService {
 		
 		if (isExistingUser)
 		{
-			System.out.println("The user is logged in......");
+			System.out.println("You are now logged in......");
 		}
 		else 
 		{
@@ -51,13 +52,12 @@ public class LoginService {
 			
 			if (UserService.getLoggedInUser() != null)
 			{
-				us.outputToUser(username + " is Logged in");
-				
 				//verify password
 				boolean isMatch = getPassword().equals(UserService.getLoggedInUser().getPassword());
 				
 				if (isMatch)
 				{
+					System.out.println();
 					UserService.getLoggedInUser().setIsLoggedIn(isMatch);
 					return;
 				}
@@ -68,10 +68,10 @@ public class LoginService {
 					} catch(InvalidCredentialsException ex) {
 						us.outputToUser("Your credentials are invalid...");
 						UserService.resetLoggedInUser();
+						Logging.logWarnMessage(username + "; user invalid credentials; " + System.currentTimeMillis());
 						continue;
 					}
 				}
-
 			}
 			
 			// if not ask if entry is correct
@@ -130,9 +130,6 @@ public class LoginService {
 			return in.nextLine();
 	}
 	
-	/*
-	 * 
-	 */
 	public void registerUser() {		
 		UserService.getLoggedInUser().setPassword(getPassword());
 		UserService.getLoggedInUser().setFirstName(getFirstName());
@@ -142,8 +139,7 @@ public class LoginService {
 		us.addUser(UserService.getLoggedInUser());
 	}
 	
-	
-	
+
 	
 	
 	

@@ -1,20 +1,22 @@
 package com.revature.models;
 
+
 public class Account {
 
 	private int accountId;
-	private int userId;
+	private String accountName;
 	private double balance;
+	private boolean isApproved;
 
 	public Account() {
 		super();
 	}
 
-	public Account(int accountId, int userId, double balance) {
+	public Account(int accountId, int userId, double balance, boolean isApproved) {
 		super();
 		this.accountId = accountId;
-		this.userId = userId;
 		this.balance = balance;
+		this.isApproved = isApproved;
 	}
 
 	public int getAccountId() {
@@ -25,14 +27,6 @@ public class Account {
 		this.accountId = accountId;
 	}
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
 	public double getBalance() {
 		return balance;
 	}
@@ -41,9 +35,27 @@ public class Account {
 		this.balance = balance;
 	}
 
+	public boolean isApproved() {
+		return isApproved;
+	}
+
+	public void setApproved(boolean isApproved) {
+		this.isApproved = isApproved;
+	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+
 	@Override
 	public String toString() {
-		return "Account [accountId=" + accountId + ", userId=" + userId + ", balance=" + balance + "]";
+		return "Account [accountId=" + accountId + ", accountName=" + accountName + ", balance=" + balance
+				+ ", isApproved=" + isApproved + "]";
 	}
+
 
 }
