@@ -1,14 +1,17 @@
 package com.revature.services;
 
 import java.util.List;
-import com.revature.dao.UserDAO;
+import java.util.Scanner;
+
+import com.revature.dao.users.UserDAO;
 import com.revature.models.User;
+import com.revature.services.ServiceWrangler;
 
 public class UserService {
 	
 	private UserDAO uDao;
 	private static User loggedInUser = new User();
-	//private List<User> listUsers = new ArrayList<User>();
+	private Scanner in = new Scanner(System.in);
 
 	public UserService(String m, UserDAO uDao)
 	{
@@ -24,10 +27,33 @@ public class UserService {
 		}
 	}
 	
+	public void printAllCustomers()
+	{
+		for (User user: getAllUsers())
+		{
+			if (!user.isEmployee())
+			{
+				outputToUser(user.toString());
+			}
+		}
+	}
+	
+	public void modifyUserAccounts(ServiceWrangler sw) { 
+
+		for(User u: getAllUsers())
+		{
+			try {
+				loggedInUser = u;
+				sw.updateUserInformation();
+				
+			}catch(Exception ex) {ex.printStackTrace();}
+		}
+		
+	}
+	
 	public List<User> getAllUsers()
 	{
 		return uDao.getAllUsers();
-		// return listUsers;
 	}
 	
 	public User signUp(String first, String last, String email, String userName, String passHash) {
@@ -50,29 +76,82 @@ public class UserService {
 		return null;
 	}
 	
-
-	
-	
 	public void outputToUser(String m) { System.out.println(m); }
 	
-
-
-	
-	public void getNewUserData()
-	{
-		// get user info
-		  // need first name, last name, username, password, verifypassword
-		// u.setUserName(getUserDataPoint(PROMPT + "username :"));
-		
-		// password is not equal to verifypassword
-		  // output message to user mandating reentry of data
-		  // prompt for more user data
+	public String getUserStringResponse(String message) {
+		outputToUser(message);
+		return in.nextLine();
+	}
+	public int getUserIntResponse(String message) {
+		outputToUser(message);
+		return Integer.parseInt(in.nextLine());
 	}
 	
+	public double getUserDoubleResponse(String message)
+	{
+		outputToUser(message);
+		double tmp = -1;
+		try
+		{
+			tmp = Double.parseDouble(in.nextLine());
+		}
+		catch(NumberFormatException ex) {
+			outputToUser("You have not entered in a valid number.");
+		}
+		catch(Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return tmp;
+	}
+
+	
+	public void printUserInformation()
+	{
+		User u = loggedInUser;
+		//display current information
+		outputToUser("****User Information****");
+		outputToUser("Username: " + u.getUsername());
+		outputToUser("First Name: " + u.getFirstName());
+		outputToUser("Last Name: " + u.getLastName());
+		outputToUser("Email: " + u.getEmail());
+		outputToUser("****User Information****");
+	}
+	
+	/*
+	 * 			us.updateUserInformation(ls.getUserName(), us.getPassword(), us.getFirstName(),
+					us.getLastName(), us.getEmail());
+	 */
+	public void updateUserInformation(String username, String password, String firstName, 
+			String lastName, String email)
+	{
+		// echo new information
+		outputToUser("****New User Information****");
+		outputToUser("Username: " + username);
+		outputToUser("First Name: " + firstName);
+		outputToUser("Last Name: " + lastName);
+		outputToUser("Email: " + email);
+		outputToUser("****User Information****");
+
+		// get confirmation of update
+		int choice = getUserIntResponse("\nDo you wish to change your information to that above?\n" +
+				"Press 1 for yes or 2 for no: ");
+	
+		// update
+		if(choice == 1)
+		{
+			loggedInUser.setUsername(username);
+			loggedInUser.setFirstName(firstName);
+			loggedInUser.setLastName(lastName);
+			loggedInUser.setEmail(email);
+			
+			uDao.updateUser(loggedInUser);
+		}
+		
+	}
 	
 	public void addUser(User user)
 	{
-		// Add the user to the database
 		uDao.addUser(user);
 	}
 

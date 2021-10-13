@@ -1,5 +1,6 @@
 package com.revature.services.test;
 
+import com.revature.dao.users.UserDAODB;
 import com.revature.services.UserService;
 
 import org.junit.Before;
@@ -7,7 +8,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import com.revature.dao.UserDAODB;
 
 public class UserServiceTest {
 	

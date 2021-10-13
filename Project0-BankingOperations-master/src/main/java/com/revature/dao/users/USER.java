@@ -1,4 +1,4 @@
-package com.revature.dao;
+package com.revature.dao.users;
 
 public enum USER {
 	// (id, first_name, last_name, user_name, passwprd, email, isEmployee, isAdmin)

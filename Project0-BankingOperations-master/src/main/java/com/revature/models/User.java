@@ -23,19 +23,19 @@ public class User {
 	}
 
 	// Create a new user. At this point, the user doesn't have a database id yet.
-	public User(String firstName, String lastName, String email, String userName, String password) {
+	public User(String firstName, String lastName, String username, String password, String email) {
 		this.id = -1;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.username = userName;
+		this.username = username;
 		this.password = password;
 		this.isEmployee = false;
 		this.isAdmin = false;
 		this.isLoggedIn = false;
 	}
 
-	public User(int id, String firstName, String lastName, String email, String username, String password, 
+	public User(int id, String firstName, String lastName, String username, String password, String email,
 			boolean isEmployee, boolean isAdmin) {
 		this.id = id;
 		this.firstName = firstName;
